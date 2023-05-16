@@ -8,10 +8,27 @@ namespace Train_Poo
         {
             static int nombrePersonnes = 0;
 
-            public string nom;
-            int age;
-            string emploi; // Pour la variable qui est initialisée à null dans le constructeur on peut la retirer du constructeur et comme elle n'est pas initialisée ici elle vaut déjà null par défaut
+            //Pour faire mieux et plus concis on peut changer la variable en proprété et on n'a plus besoin de GetNon() et SetNom()
+            //De cette façon on peut lire et modifier la variable nom, mais on peut aussi faire private set; pour ne pas pouvoir modifier la variable nom directement
+            public string nom { get; init; }
+            //string nom;
+            public int age { get; set; }
+            public string emploi { get; set; } // Pour la variable qui est initialisée à null dans le constructeur on peut la retirer du constructeur et comme elle n'est pas initialisée ici elle vaut déjà null par défaut
             int numeroPersonne;
+
+            //Accesseurs fonction qui permet de lire et modifier une variable privée
+            //public string GetNom()
+            //{
+            //    return nom;
+            //}
+
+            // Grace à cette fonction on peut modifier la variable privée nom
+            /*
+            public void SetNom(string value)
+            {
+                nom = value;
+            }
+            */
 
             // On peut mettre des valeurs par défaut aux paramètres
             //Au lieu de refaire plus ou moins le même constructeur on peut faire comme en dessous
@@ -46,16 +63,18 @@ namespace Train_Poo
 
             //}
 
+            public Personne()
+            {
+                nombrePersonnes++;
+                this.numeroPersonne = nombrePersonnes;
+            }
+
             // null ne s'utilise que pour les objets et les string par exemple
-            public Personne(string nom, int age, string emploi = null)
+            public Personne(string nom, int age, string emploi = null) : this()
             {
                 this.nom = nom;
                 this.age = age;
                 this.emploi = emploi;
-
-                nombrePersonnes++;
-
-                this.numeroPersonne = nombrePersonnes;
 
             }
             // On change notre méthode pour le cas ou il n'y a pas d'emploi avec le null du constructeur
@@ -145,6 +164,16 @@ namespace Train_Poo
 
             var personne1 = new Personne("Paul", 30, "Développeur");
             personne1.Afficher();
+
+            var personne3 = new Personne { nom = "Murielle", age = 30, emploi = "Maçon" };
+            personne3.Afficher();
+
+            // On peut modifier une variable privée avec un accesseur. Ici le nom ne peut plus être modifié parce qu'il est en private. Il faut passer par un accesseur notre fonction GetNom() ou se mettre en public pour pouvoir le modifier
+            //personne1.nom = "Toto";
+
+            //Pour changer le nom il faut faire comme en dessous avec l'accesseur SetNom()
+            //personne1.SetNom("Toto");
+            //personne1.Afficher();
 
             var personne2 = new Personne("Titi", 25);
             personne2.Afficher();
